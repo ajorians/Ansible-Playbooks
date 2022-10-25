@@ -1,0 +1,9 @@
+# Run with:
+# ansible-playbook BasicSetupSteps.yml --ask-vault-pass
+
+---
+- import_playbook: Tasks/SetTimeZone.yml
+- import_playbook: Tasks/CreateAJOriansUser.yml
+- import_playbook: Tasks/ZypperUpdate.yml
+- import_playbook: Tasks/InstallDocker.yml
+
