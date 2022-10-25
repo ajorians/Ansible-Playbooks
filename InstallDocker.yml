@@ -1,0 +1,22 @@
+# Run with:
+# ansible-playbook InstallDocker.yml
+
+---
+- name: Install Docker and Start Service
+  hosts: all
+  tasks:
+
+  - name: Install just Docker package on OpenSUSE/SUSE Linux
+    zypper:
+      name: docker
+      state: present
+
+  - name: Enable Docker service
+    ansible.builtin.systemd:
+      name: docker
+      enabled: yes
+
+  - name: Start Docker service
+    ansible.builtin.systemd:
+      state: started
+      name: docker
