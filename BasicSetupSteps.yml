@@ -6,4 +6,5 @@
 - import_playbook: Tasks/CreateAJOriansUser.yml
 - import_playbook: Tasks/ZypperUpdate.yml
 - import_playbook: Tasks/InstallDocker.yml
+- import_playbook: Tasks/InstallGit.yml
 
