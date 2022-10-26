@@ -8,4 +8,5 @@
 - import_playbook: Tasks/InstallDocker.yml
 - import_playbook: Tasks/InstallGit.yml
 - import_playbook: Tasks/InstallAnsible.yml
+- import_playbook: Tasks/SetupMariaDB.yml
 
