@@ -1,0 +1,24 @@
+# Run with:
+# ansible-playbook KillDockerSwarm.yml
+
+---
+- name: Removes the docker swarm
+  hosts: swarmclients
+  tasks:
+
+  - name: Nodes Leaving the Swarm
+    docker_swarm:
+      state: absent
+      force: true
+    ignore_errors: true
+
+- name: Removes the host docker swarm
+  hosts: swarmhosts
+  tasks:
+
+  - name: Hosts Leaving the Swarm
+    docker_swarm:
+      state: absent
+      force: true
+    ignore_errors: true
+

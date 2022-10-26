@@ -11,6 +11,17 @@
       name: docker
       state: present
 
+  - name: Install docker-compose package on OpenSUSE/SUSE Linux
+    zypper:
+      name: docker-compose
+      state: present
+
+  # Was needed for Docker Swarm
+  - name: Install Python modules for docker package on OpenSUSE/SUSE Linux
+    zypper:
+      name: python*-docker
+      state: present
+
   - name: Enable Docker service
     ansible.builtin.systemd:
       name: docker
