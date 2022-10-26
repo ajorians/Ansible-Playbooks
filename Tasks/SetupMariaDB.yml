@@ -19,6 +19,13 @@
       name: mariadb
       state: present
 
+  - name: Allow connections besides localhost
+    replace:
+      path: /etc/my.cnf
+      regexp: 'bind-address\s+=\s+127.0.0.1'
+      replace: 'bind-address = 0.0.0.0'
+      backup: yes
+
   - name: Enable Maria service
     ansible.builtin.systemd:
       name: mysql
