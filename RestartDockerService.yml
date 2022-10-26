@@ -1,0 +1,21 @@
+# Run with:
+# ansible-playbook -i inventory.ini RestartDockerService.yml
+
+---
+- name: Restart Docker Service on manager machines
+  hosts: swarm-managers
+  tasks:
+
+  - name: Restart Docker service
+    ansible.builtin.systemd:
+      state: restarted
+      name: docker
+
+- name: Restart Docker Service on worker machines
+  hosts: swarm-workers
+  tasks:
+
+  - name: Restart Docker service
+    ansible.builtin.systemd:
+      state: restarted
+      name: docker

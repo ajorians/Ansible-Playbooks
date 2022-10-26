@@ -7,4 +7,5 @@
 - import_playbook: Tasks/ZypperUpdate.yml
 - import_playbook: Tasks/InstallDocker.yml
 - import_playbook: Tasks/InstallGit.yml
+- import_playbook: Tasks/InstallAnsible.yml
 
