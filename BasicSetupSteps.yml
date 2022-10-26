@@ -1,5 +1,5 @@
 # Run with:
-# ansible-playbook BasicSetupSteps.yml --ask-vault-pass
+# ansible-playbook -i inventory.ini BasicSetupSteps.yml --ask-vault-pass
 
 ---
 - import_playbook: Tasks/SetTimeZone.yml
