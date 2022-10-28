@@ -15,25 +15,15 @@
     file:
       path: /mnt/DockerSwarmData 
       state: directory
-
-  - name: Check if directory for data exists
-    stat:
-      path: /mnt/DockerSwarmData
-    register: server_dockerswarmdata
-
-  - name: Give permissions to Docker Swarm Data
-    ansible.builtin.file:
-      path: /mnt/DockerSwarmData
       owner: ajorians
       group: users
-      mode: '1777'
-    when: server_dockerswarmdata.stat.exists
+      mode: 0777
 
   - name: Export data directory in /etc/exports
     ansible.builtin.lineinfile:
       path: /etc/exports
       regexp: '^/mnt/DockerSwarmData'
-      line: /mnt/DockerSwarmData client?(rw,sync,no_root_squash)
+      line: /mnt/DockerSwarmData *(rw,sync,no_root_squash)
 
   - name: Enable NFS service
     ansible.builtin.systemd:
@@ -53,19 +43,9 @@
     file:
       path: /opt/DockerSwarmData
       state: directory
-
-  - name: Check if client directory for data exists
-    stat:
-      path: /opt/DockerSwarmData
-    register: client_dockerswarmdata
-
-  - name: Give permissions to Client side Docker Swarm Data
-    ansible.builtin.file:
-      path: /opt/DockerSwarmData
       owner: ajorians
       group: users
-      mode: '1777'
-    when: client_dockerswarmdata.stat.exists
+      mode: 0777
 
   - name: Mount data directory in /etc/fstab
     ansible.builtin.lineinfile:

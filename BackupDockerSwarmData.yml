@@ -1,0 +1,52 @@
+# Run with:
+# ansible-playbook -i inventory.ini BackupDockerSwarmData.yml
+
+---
+- name: Do a full backup on manager machines
+  hosts: swarm-managers
+  tasks:
+
+  - name: Get timestamp from the system
+    shell: "date +%Y-%m-%d%H-%M-%S"
+    register: timestamp
+
+  - name: Set variables
+    set_fact:
+     cur_date: "{{ timestamp.stdout[0:10]}}"
+     cur_time: "{{ timestamp.stdout[10:]}}"
+
+  - name: Print the timestamp
+    ansible.builtin.debug:
+      msg: "Date {{ cur_date }}; Time: {{ cur_time }}"
+
+  - name: Create directory for backups
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: ajorians
+      group: users
+      mode: 0777
+    loop:
+      - /mnt/DockerSwarmBackups
+      - "/mnt/DockerSwarmBackups/{{ cur_date }}-{{ cur_time }}"
+
+  - name: Backup NFS Data
+    community.general.archive:
+      path: /mnt/DockerSwarmData
+      dest: "/mnt/DockerSwarmBackups/{{ cur_date }}-{{ cur_time }}/DockerSwarmData.tgz"
+
+  - name: Back up all databases
+    community.mysql.mysql_db:
+      state: dump
+      name: all
+      target: "/mnt/DockerSwarmBackups/{{ cur_date }}-{{ cur_time }}/database.sql"
+
+# Now to restore do the following
+# gunzip DockerSwarmData.tgz
+# tar -vxf DockerSwarmData.tar
+# mv DockerSwarmData ../..
+# mysql -u root -p < database.sql (no password; and mariadb service does need to be running)
+# restart host and clients
+# restart docker services
+# Hopefully don't need to do that; but if so hope it works.
+#
