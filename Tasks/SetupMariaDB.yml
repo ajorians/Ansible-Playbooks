@@ -22,7 +22,7 @@
   - name: Allow connections besides localhost
     replace:
       path: /etc/my.cnf
-      regexp: 'bind-address\s+=\s+127.0.0.1'
+      regexp: '^bind-address\s+=\s+127.0.0.1'
       replace: '#bind-address = 127.0.0.1'
       backup: yes
 
