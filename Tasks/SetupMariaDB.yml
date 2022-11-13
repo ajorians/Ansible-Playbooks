@@ -19,6 +19,14 @@
       name: mariadb
       state: present
 
+  - name: Make ~/.my.cnf file
+    ansible.builtin.copy:
+      dest: /root/.my.cnf
+      content: |
+        [client]
+        user=root
+        password={{ databasepasswd }}
+
   - name: Allow connections besides localhost
     replace:
       path: /etc/my.cnf
