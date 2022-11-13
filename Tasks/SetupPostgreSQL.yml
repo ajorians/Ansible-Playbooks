@@ -16,6 +16,12 @@
       name: postgresql-server
       state: present
 
+  # Needed for Ansible's database module
+  - name: Install psycopg2 package on OpenSUSE/SUSE Linux
+    zypper:
+      name: python310-psycopg2
+      state: present
+
   - name: Enable Postgres service
     ansible.builtin.systemd:
       name: postgresql
