@@ -12,3 +12,7 @@
 - import_playbook: Tasks/SetupRedis.yml
 - import_playbook: Tasks/SetupPostgreSQL.yml
 
+- import_playbook: Tasks/InstallMLocate.yml
+- import_playbook: Tasks/InstallUnrar.yml
+- import_playbook: Tasks/InstallScreen.yml
+
