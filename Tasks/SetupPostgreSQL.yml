@@ -2,7 +2,7 @@
 # ansible-playbook SetupPostgreSQL.yml
 
 ---
-- name: Install PostgreSQLL
+- name: Install PostgreSQL
   hosts: all
   tasks:
 
@@ -32,6 +32,13 @@
     ansible.builtin.systemd:
       state: restarted
       name: postgresql
+
+  - name: Allow connections from anywhere
+    replace:
+      path: /var/lib/pgsql/data/postgresql.conf
+      regexp: "#listen_addresses = 'localhost'"
+      replace: "listen_addresses = '*'"
+      backup: yes
 
   - name: Allow connections besides localhost
     replace:
